@@ -1,0 +1,14 @@
+#!groovy
+job ('seed'){
+
+steps {
+        downstreamParameterized {
+            trigger('Project1, Project2') {
+                block {
+                    buildStepFailure('FAILURE')
+                    failure('FAILURE')
+                    unstable('UNSTABLE')
+                }
+
+
+}
