@@ -6,7 +6,7 @@ parameters {
 	    activeChoiceParam('CHOICER') {
 					 description ('allows choose job')
 					 choiceType('CHECKBOX')
-					 groovycript {script('''list = []
+					 groovyScript {script('''list = []
 								 for(i in 1..4){
 							         list.add("children${i}-job")
   									       }
