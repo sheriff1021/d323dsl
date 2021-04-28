@@ -1,14 +1,65 @@
 #!groovy
+def urlka='https://github.com/sheriff1021/d323dsl.git'
 job ('seed'){
+parameters {
+	    choiceParam('BRANCH_NAME', ['volodya', 'master'], 'Branch name')
+	    activeChoiceParam('CHOICER') {
+					 description ('allows choose job')
+					 choicyType('CHECKBOX')
+					 groovyscript {script('''list = []
+								 for(i in 1..4){
+							         list.add("children${i}-job")
+  									       }
+								return list''')													      																				
+}
+	}
 
 steps {
         downstreamParameterized {
-            trigger('Project1, Project2') {
-                block {
-                    buildStepFailure('FAILURE')
-                    failure('FAILURE')
-                    unstable('UNSTABLE')
+           			 trigger('$CHOICER') {	
+                			  		 block {
+                    			   			 buildStepFailure('FAILURE')
+                    			   	 		 failure('FAILURE')
+                    			   	 		 unstable('UNSTABLE')
+                     			   	               }
+							 parameters {
+                    						predefinedProp('BRANCH_NAME', '$BRANCH_NAME')
+						    	             }
+				}
+	}
+
+for (int i=0; i<4;i++) {
+			job ("children${i}-job") {
+						scm {
+    							git {
+         							remote {
+                								github(urlka)
+                							}
+								branch('$BRANCH_NAME')
+       			   	 	    		    }
+   		   	 	   		     }
+						parameters {
+               					 	activeChoiceParam('BRANCH_NAME') {
+                   					 description('Choose branch')
+                   					 filterable(false)
+                   					 choiceType('SINGLE_SELECT')
+                   					 groovyScript {
+                      					  script('("git ls-remote -h https://github.com/sheriff1021/d323dsl").execute().text.readLines().collect { it.split()[1].replaceAll(\'refs/heads/\', \'\')}.unique()')
+                  						      }
+              							    			  }
+          						   }
+publishers {
+                archiveArtifacts {
+                    pattern('output.txt, ${BRANCH_NAME}_dsl_script.tar.gz')
+
                 }
+wrappers {
+                preBuildCleanup {
+                    deleteDirectories(false)
+                    cleanupParameter()
+                }
+            }
+						 }
+	   		} 
 
 
-}
