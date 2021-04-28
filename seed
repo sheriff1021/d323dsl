@@ -48,7 +48,7 @@ wrappers {
                 }
             }              							    			  }
 steps {
-                shell('''sh script.sh > output.txt; tar -czvf "$BRANCH_NAME"_dsl_script.tar.gz''')
+                shell('''sh script.sh > output.txt; tar -czvf "$BRANCH_NAME"_dsl_script.tar.gz seed''')
             }         						   }
 publishers {
                 archiveArtifacts {
