@@ -5,8 +5,8 @@ parameters {
 	    choiceParam('BRANCH_NAME', ['volodya', 'master'], 'Branch name')
 	    activeChoiceParam('CHOICER') {
 					 description ('allows choose job')
-					 choicyType('CHECKBOX')
-					 groovyscript {script('''list = []
+					 choiceType('CHECKBOX')
+					 groovycript {script('''list = []
 								 for(i in 1..4){
 							         list.add("children${i}-job")
   									       }
@@ -53,7 +53,7 @@ wrappers {
                 }
             }              							    			  }
 steps {
-                shell('''sh script.sh > output.txt; tar -czvf "$BRANCH_NAME"_dsl_script.tar.gz jobs.groovy''')
+                shell('''sh script.sh > output.txt; tar -czvf "$BRANCH_NAME"_dsl_script.tar.gz''')
             }         						   }
 publishers {
                 archiveArtifacts {
@@ -63,5 +63,5 @@ publishers {
 
 						 }
 } 
-
+}}}}
 
