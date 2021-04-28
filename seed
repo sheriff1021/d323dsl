@@ -1,10 +1,9 @@
 #!groovy
-def urlka='https://github.com/sheriff1021/d323dsl.git'
+def urlka='sheriff1021/d323dsl'
 job ('seed'){
 parameters {
 	    choiceParam('BRANCH_NAME', ['volodya', 'master'], 'Branch name')
 	    activeChoiceParam('CHOICER') {
-					 description ('allows choose job')
 					 choiceType('CHECKBOX')
 					 groovyScript {script('''list = []
 								 for(i in 1..4){
