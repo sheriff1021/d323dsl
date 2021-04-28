@@ -5,11 +5,7 @@ parameters {
 	    choiceParam('BRANCH_NAME', ['volodya', 'master'])
 	    activeChoiceParam('CHOICER') {
 					 choiceType('CHECKBOX')
-					 groovyScript {script('''list = []
-								 for(i in 1..4){
-							         list.add("children${i}-job")
-  									       }
-								return list''')													      																				
+					 groovyScript {script('''return ['children1-job,children2-job,children3-job,children4-job,']''')													      																				
 }
 	}
 
